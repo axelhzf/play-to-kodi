@@ -1,0 +1,19 @@
+:global(*) {
+    box-sizing: border-box;
+}
+
+:global(body) {
+    margin: 0;
+    font-family: Helvetica, sans-serif;
+    font-size: 14px;
+    color: #969696;
+}
+
+:global(a) {
+    text-decoration: none;
+    color: #474747;
+}
+
+:global(a:hover) {
+    color: #DE111E;
+}

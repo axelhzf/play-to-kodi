@@ -8,8 +8,8 @@ export default class Header extends React.Component {
     return (
       <div className={styles.header}>
         <ul>
-          <li><Link to='/movies'>Movies</Link></li>
-          <li><Link to='/shows'>TV Shows</Link></li>
+          <li><Link to='/movies' activeClassName={styles.active}>Movies</Link></li>
+          <li><Link to='/shows' activeClassName={styles.active}>TV Shows</Link></li>
         </ul>
       </div>
     )

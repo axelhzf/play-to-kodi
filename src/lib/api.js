@@ -3,9 +3,17 @@ import qs from 'qs'
 class Api {
 
   popcornEndpoint = 'https://api-fetch.website';
+  // TODO new endpoint? https://tv-v2.api-fetch.website no cors?
+
 
   async movies (query = {}) {
     const url = `${this.popcornEndpoint}/tv/movies/1?${qs.stringify(query)}`;
+    const response = await fetch(url);
+    return await response.json();
+  }
+
+  async movieDetails(imdbId) {
+    const url = `${this.popcornEndpoint}/tv/movie/${imdbId}`;
     const response = await fetch(url);
     return await response.json();
   }
