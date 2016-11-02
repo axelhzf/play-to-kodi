@@ -1,0 +1,22 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.item {
+    width: 200px;
+    margin-right: 10px;
+}
+
+.poster {
+    display: block;
+    max-width: 100%;
+}
+
+.title {
+    font-weight: bold;
+}
+
+.description {
+
+}

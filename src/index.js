@@ -1,22 +1,23 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import ShowsScreen from './containers/ShowsScreen'
+import MoviesScreen from './containers/MoviesScreen'
 import ShowScreen from './containers/ShowScreen'
-import {Router, Route, browserHistory} from 'react-router'
+import App from './containers/App'
+import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
 
-class App extends React.Component {
+const root = (
+  <Router history={browserHistory}>
+    <Route path='/' component={App}>
+      <IndexRedirect to='/shows'/>
 
-  render () {
-    return (
-      <Router history={browserHistory}>
-        <Route path='/'>
-          <Route path='/shows' component={ShowsScreen}/>
-          <Route path='/shows/:id' component={ShowScreen}/>
-        </Route>
-      </Router>
-    )
-  }
-}
+      <Route path='/shows' component={ShowsScreen}/>
+      <Route path='/shows/:id' component={ShowScreen}/>
 
+      <Route path='/movies' component={MoviesScreen}/>
 
-ReactDom.render(<App/>, document.getElementById('root'))
+    </Route>
+  </Router>
+)
+
+ReactDom.render(root, document.getElementById('root'))

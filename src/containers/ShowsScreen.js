@@ -1,6 +1,7 @@
 import React from 'react'
 import api from '../lib/api'
 import {Link} from 'react-router'
+import ShowsGrid from '../components/ShowsGrid'
 
 export default class ShowsScreen extends React.Component {
 
@@ -19,21 +20,8 @@ export default class ShowsScreen extends React.Component {
 
   render () {
     const { shows } = this.state
-
-    if (!shows) {
-      return <div></div>
-    }
-
-    return (
-      <ul>
-        {shows.map(show =>(
-          <li key={show.imdb_id}>
-            <Link to={`/shows/${show.imdb_id}`}>{show.title}</Link>
-          </li>
-        ))}
-      </ul>
-    )
-
+    if (!shows) return <div></div>
+    return (<ShowsGrid shows={shows}/>)
   }
 
 }
