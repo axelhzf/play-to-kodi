@@ -32,6 +32,9 @@ class Api {
   }
 
   async playMagnet (magnet) {
+    console.log("playing", magnet)
+    return;
+
     const encodedMagnet = encodeURIComponent(magnet);
     const body = {
       jsonrpc: '2.0',

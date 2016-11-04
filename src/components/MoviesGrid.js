@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import styles from './MoviesGrid.css'
 
 export default class MoviesGrid extends React.Component {
 
@@ -8,13 +7,15 @@ export default class MoviesGrid extends React.Component {
     const { movies } = this.props;
 
     return (
-      <div className={styles.grid}>
+      <div className="poster-grid movies-poster-grid">
         {movies.map(movie =>(
-          <div key={movie.imdb_id} className={styles.item}>
+          <div key={movie.imdb_id} className="poster-grid-item">
             <Link to={`/movies/${movie.imdb_id}`}>
-              <img className={styles.poster} src={movie.images.poster}/>
-              <div className={styles.title}>{movie.title}</div>
-              <div className={styles.description}>Movie description</div>
+              <img className="poster-grid-poster" src={movie.images.poster}/>
+              <div className="poster-grid-description">
+                <div className="title">{movie.title}</div>
+                <div className="description">Movie description</div>
+              </div>
             </Link>
           </div>
         ))}

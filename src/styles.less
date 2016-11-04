@@ -1,0 +1,187 @@
+@red: #DE111E;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Helvetica, sans-serif;
+  font-size: 14px;
+  color: #474747;
+}
+
+a {
+  text-decoration: none;
+  color: #333;
+}
+
+a:hover, .active {
+  color: @red;
+}
+
+h1, h2, h3 {
+  margin-top: 0;
+  margin-bottom: 7px;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 7px;
+}
+
+list {
+
+}
+
+.header {
+  background-color: #FAFAFA;
+  border-bottom: 1px solid #E2E2E2;
+  margin-bottom: 10px;
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+  }
+
+  li {
+    display: inline-block;
+  }
+
+  a {
+    color: @red;
+    display: block;
+    padding: 20px;
+    border-bottom: 5px solid transparent;
+
+    &:hover, &.active {
+      border-bottom-color: @red;
+    }
+
+  }
+
+}
+
+.poster-grid {
+
+  display: flex;
+  flex-wrap: wrap;
+
+  .poster-grid-item {
+    margin-right: 7px;
+    margin-bottom: 7px;
+  }
+
+  .poster-grid-poster {
+    display: block;
+    width: 200px;
+    height: 285px;
+    margin-bottom: 7px;
+  }
+
+  .poster-grid-description {
+
+  }
+
+}
+
+.movies-poster-grid {
+
+  .title {
+    font-weight: bold;
+  }
+
+}
+
+.shows-poster-grid {
+
+  .title {
+    font-weight: bold;
+  }
+
+}
+
+.show {
+
+  .show-header {
+    display: flex;
+    margin: 7px;
+
+    .show-poster {
+      width: 130px;
+    }
+
+    .show-poster img {
+      max-width: 100%;
+    }
+
+    .show-info {
+      flex: 1;
+      margin-left: 7px;
+    }
+
+    .show-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 7px;
+    }
+
+    .show-subtitle {
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+  }
+
+  .show-content {
+    margin: 7px;
+    display: flex;
+  }
+
+  .show-seasons {
+    width: 130px;
+  }
+
+  .show-episodes {
+    flex: 1;
+    margin-left: 7px;
+  }
+
+  .show-episode {
+    margin-left: 7px;
+    width: 50%;
+  }
+
+}
+
+ul.link-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li a {
+    display: block;
+    padding: 7px;
+    border-bottom: 1px solid #E2E2E2;
+
+    &:hover, &.active {
+      background-color: #F9F9F9;
+      color: @red;
+    }
+  }
+
+}
+
+button {
+  border: none;
+  background: @red;
+  color: #fff;
+  border-radius: 7px;
+  padding: 7px;
+  cursor: pointer;
+  font-size: 14px;
+  outline: none;
+}
