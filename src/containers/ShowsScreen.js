@@ -6,12 +6,7 @@ import Filters from '../components/Filters'
 export default class ShowsScreen extends React.Component {
 
   state = {
-    filter: {
-      sort: 'trending',
-      order: -1,
-      genre: null,
-      keywords: ""
-    }
+    shows: []
   }
 
   componentDidMount () {
@@ -19,28 +14,53 @@ export default class ShowsScreen extends React.Component {
   }
 
   async fetchShows () {
-    const { filter } = this.state;
-    const shows = await api.shows(filter)
+    const shows = await api.shows(this.getFilter(this.props))
     this.setState({ shows })
   }
 
   onChangeFilter = (filter) => {
-    this.setState({filter})
+    this.props.router.replace({
+      pathname: '/shows',
+      query: filter
+    })
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.filter !== this.state.filter) {
+  getFilter (props) {
+    if (!props) return {}
+
+    const defaultFilter = {
+      sort: 'trending',
+      order: -1,
+      genre: null,
+      keywords: ""
+    }
+    const {sort, order, genre, keywords} = props.location.query;
+    return _.defaults({sort, order: this.parseInt(order), genre, keywords}, defaultFilter)
+  }
+
+  parseInt(number) {
+    const int = parseInt(number, 10)
+    return _.isNaN(int) ? undefined : int;
+  }
+
+  componentDidUpdate (prevProps) {
+    const prevFilter = this.getFilter(prevProps)
+    const currentFilter = this.getFilter(this.props)
+
+    if (!_.isEqual(prevFilter, currentFilter)) {
       this.fetchShows()
     }
   }
 
   render () {
-    const { shows, filter } = this.state
+    const { shows } = this.state
     if (!shows) return <div></div>
+
+    const filter = this.getFilter(this.props)
 
     return (
       <div>
-        <Filters filter={filter} onChange={this.onChangeFilter} />
+        <Filters filter={filter} onChange={this.onChangeFilter}/>
         <ShowsGrid shows={shows}/>
       </div>
     )

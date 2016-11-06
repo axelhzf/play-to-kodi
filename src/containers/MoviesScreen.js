@@ -6,12 +6,7 @@ import Filters from '../components/Filters'
 export default class MoviesScreen extends React.Component {
 
   state = {
-    filter: {
-      sort: 'trending',
-      order: -1,
-      genre: null,
-      keywords: ""
-    }
+    movies: []
   }
 
   componentDidMount () {
@@ -19,24 +14,50 @@ export default class MoviesScreen extends React.Component {
   }
 
   async fetchMovies () {
-    const {filter} = this.state
-    const movies = await api.movies(filter)
+    const movies = await api.movies(this.getFilter(this.props))
     this.setState({ movies })
   }
 
   onChangeFilter = (filter) => {
-    this.setState({filter})
+    this.props.router.replace({
+      pathname: '/movies',
+      query: filter
+    })
   }
 
-  componentDidUpdate (prevProps, prevState) {
-    if (prevState.filter !== this.state.filter) {
+  getFilter (props) {
+    if (!props) return {}
+
+    const defaultFilter = {
+      sort: 'trending',
+      order: -1,
+      genre: null,
+      keywords: ""
+    }
+    let {sort, order, genre, keywords} = props.location.query;
+    return _.defaults({sort, order: this.parseInt(order), genre, keywords}, defaultFilter)
+  }
+
+  parseInt(number) {
+    const int = parseInt(number, 10)
+    return _.isNaN(int) ? undefined : int;
+  }
+
+  componentDidUpdate (prevProps) {
+    const prevFilter = this.getFilter(prevProps)
+    const currentFilter = this.getFilter(this.props)
+
+    if (!_.isEqual(prevFilter, currentFilter)) {
       this.fetchMovies()
     }
   }
 
   render () {
-    const { movies, filter } = this.state
+    const { movies } = this.state
     if (!movies) return <div></div>
+
+    const filter = this.getFilter(this.props)
+
     return (
       <div>
         <Filters filter={filter} onChange={this.onChangeFilter} />

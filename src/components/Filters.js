@@ -15,6 +15,7 @@ export default class Filters extends React.Component {
     onChange: PropTypes.func
   }
 
+
   onSortChange = (option) => {
     const newFilter = Object.assign({}, this.props.filter, { sort: _.get(option, "value") });
     this.props.onChange(newFilter)
