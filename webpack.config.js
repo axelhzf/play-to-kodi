@@ -29,6 +29,7 @@ module.exports = {
     new ExtractTextPlugin('style.css', { allChunks: true }),
   ],
   devServer: {
+    host: "0.0.0.0",
     historyApiFallback: true
   }
 }
