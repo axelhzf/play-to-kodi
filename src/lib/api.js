@@ -31,32 +31,8 @@ class Api {
   }
 
   async playMagnet (magnet) {
-    console.log("playing", magnet)
-    return;
-
-    const encodedMagnet = encodeURIComponent(magnet);
-    const body = {
-      jsonrpc: '2.0',
-      method: 'Player.Open',
-      id: 1,
-      params: {
-        item: {
-          file: `plugin://plugin.video.xbmctorrent/play/${encodedMagnet}`
-        }
-      }
-    };
-
-    // todo configure url
-    const response = await fetch('http://192.168.1.39/jsonrpc',
-      {
-        method: 'POST',
-        body: JSON.stringify(body),
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      });
-
+    const query = {magnet: encodeURIComponent(magnet)};
+    const response = await fetch(`http://localhost:3000/api/play?${qs.stringify(query)}`)
     return await response.json();
   }
 
