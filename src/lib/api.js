@@ -20,7 +20,6 @@ class Api {
 
   async shows (query = {}) {
     const url = `${this.popcornEndpoint}/tv/shows/1?${qs.stringify(query)}`;
-    console.log('url', url);
     const response = await fetch(url);
     return await response.json();
   }

@@ -1,5 +1,8 @@
 # Play to kodi
 
+## API documentation
+
+http://docs.popcornofficial.apiary.io/#
 
 ## Design inspiration
 

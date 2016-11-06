@@ -15,6 +15,10 @@ module.exports = {
         exclude: /node_modules/
       },
       {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+      },
+      {
         test: /\.less$/,
         loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!less')
       },
