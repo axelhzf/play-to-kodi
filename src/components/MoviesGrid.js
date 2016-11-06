@@ -8,8 +8,8 @@ export default class MoviesGrid extends React.Component {
 
     return (
       <div className="poster-grid movies-poster-grid">
-        {movies.map(movie =>(
-          <div key={movie.imdb_id} className="poster-grid-item">
+        {movies.map((movie, index) =>(
+          <div key={`${movie.imdb_id}_${index}`} className="poster-grid-item">
             <Link to={`/movies/${movie.imdb_id}`}>
               <img className="poster-grid-poster" src={movie.images.poster}/>
               <div className="poster-grid-description">

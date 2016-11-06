@@ -8,8 +8,8 @@ export default class ShowsGrid extends React.Component {
 
     return (
       <div className="poster-grid shows-poster-grid">
-        {shows.map(show =>(
-          <div key={show.imdb_id} className="poster-grid-item">
+        {shows.map((show, index) =>(
+          <div key={`${show.imdb_id}_${index}`} className="poster-grid-item">
             <Link to={`/shows/${show.imdb_id}`}>
               <img className="poster-grid-poster" src={show.images.poster}/>
               <div className="poster-grid-description">

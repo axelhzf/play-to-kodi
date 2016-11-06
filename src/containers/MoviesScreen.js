@@ -2,6 +2,7 @@ import React from 'react'
 import api from '../lib/api'
 import MoviesGrid from '../components/MoviesGrid'
 import Filters from '../components/Filters'
+import InfiniteScroll from 'react-infinite-scroller'
 
 export default class MoviesScreen extends React.Component {
 
@@ -14,7 +15,7 @@ export default class MoviesScreen extends React.Component {
   }
 
   async fetchMovies () {
-    const movies = await api.movies(this.getFilter(this.props))
+    const movies = await api.movies(1, this.getFilter(this.props))
     this.setState({ movies })
   }
 
@@ -52,6 +53,14 @@ export default class MoviesScreen extends React.Component {
     }
   }
 
+  loadMore = async (page) => {
+    if (page === 1) return;
+
+    const newMovies = await api.movies(page, this.getFilter(this.props))
+    const movies = [].concat(this.state.movies, newMovies)
+    this.setState({ movies })
+  }
+
   render () {
     const { movies } = this.state
     if (!movies) return <div></div>
@@ -61,7 +70,15 @@ export default class MoviesScreen extends React.Component {
     return (
       <div>
         <Filters filter={filter} onChange={this.onChangeFilter} />
-        <MoviesGrid movies={movies}/>
+
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.loadMore}
+          hasMore={true}
+          loader={<div className="loader">Loading ...</div>}
+        >
+          <MoviesGrid movies={movies}/>
+        </InfiniteScroll>
       </div>
     )
   }

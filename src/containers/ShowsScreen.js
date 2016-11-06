@@ -2,6 +2,7 @@ import React from 'react'
 import api from '../lib/api'
 import ShowsGrid from '../components/ShowsGrid'
 import Filters from '../components/Filters'
+import InfiniteScroll from 'react-infinite-scroller'
 
 export default class ShowsScreen extends React.Component {
 
@@ -14,7 +15,7 @@ export default class ShowsScreen extends React.Component {
   }
 
   async fetchShows () {
-    const shows = await api.shows(this.getFilter(this.props))
+    const shows = await api.shows(1, this.getFilter(this.props))
     this.setState({ shows })
   }
 
@@ -34,11 +35,11 @@ export default class ShowsScreen extends React.Component {
       genre: null,
       keywords: ""
     }
-    const {sort, order, genre, keywords} = props.location.query;
-    return _.defaults({sort, order: this.parseInt(order), genre, keywords}, defaultFilter)
+    const { sort, order, genre, keywords } = props.location.query;
+    return _.defaults({ sort, order: this.parseInt(order), genre, keywords }, defaultFilter)
   }
 
-  parseInt(number) {
+  parseInt (number) {
     const int = parseInt(number, 10)
     return _.isNaN(int) ? undefined : int;
   }
@@ -52,6 +53,14 @@ export default class ShowsScreen extends React.Component {
     }
   }
 
+  loadMore = async (page) => {
+    if (page === 1) return;
+
+    const newShows = await api.shows(page, this.getFilter(this.props))
+    const shows = [].concat(this.state.shows, newShows)
+    this.setState({ shows })
+  }
+
   render () {
     const { shows } = this.state
     if (!shows) return <div></div>
@@ -61,7 +70,16 @@ export default class ShowsScreen extends React.Component {
     return (
       <div>
         <Filters filter={filter} onChange={this.onChangeFilter}/>
-        <ShowsGrid shows={shows}/>
+
+        <InfiniteScroll
+          pageStart={0}
+          loadMore={this.loadMore}
+          hasMore={true}
+          loader={<div className="loader">Loading ...</div>}
+        >
+          <ShowsGrid shows={shows}/>
+        </InfiniteScroll>
+
       </div>
     )
   }

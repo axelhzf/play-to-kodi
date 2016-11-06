@@ -6,8 +6,8 @@ class Api {
   // TODO new endpoint? https://tv-v2.api-fetch.website no cors?
 
 
-  async movies (query = {}) {
-    const url = `${this.popcornEndpoint}/tv/movies/1?${qs.stringify(query)}`;
+  async movies (page = 1, query = {}) {
+    const url = `${this.popcornEndpoint}/tv/movies/${page}?${qs.stringify(query)}`;
     const response = await fetch(url);
     return await response.json();
   }
@@ -18,8 +18,8 @@ class Api {
     return await response.json();
   }
 
-  async shows (query = {}) {
-    const url = `${this.popcornEndpoint}/tv/shows/1?${qs.stringify(query)}`;
+  async shows (page = 1, query = {}) {
+    const url = `${this.popcornEndpoint}/tv/shows/${page}?${qs.stringify(query)}`;
     const response = await fetch(url);
     return await response.json();
   }
