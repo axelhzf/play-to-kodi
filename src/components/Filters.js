@@ -1,9 +1,12 @@
-import React, {PropTypes} from 'react'
-
+import React, { PropTypes } from 'react'
 import Select from 'react-select'
 import 'react-select/dist/react-select.css'
 
 export default class Filters extends React.Component {
+
+  state = {
+    keywords: ""
+  }
 
   propsType = {
     filter: PropTypes.shape({
@@ -15,6 +18,9 @@ export default class Filters extends React.Component {
     onChange: PropTypes.func
   }
 
+  componentDidMount () {
+    this.setState({ keywords: this.props.filter.keywords || "" })
+  }
 
   onSortChange = (option) => {
     const newFilter = Object.assign({}, this.props.filter, { sort: _.get(option, "value") });
@@ -32,18 +38,30 @@ export default class Filters extends React.Component {
   }
 
   onKeywordsChange = (event) => {
-    const newFilter = Object.assign({}, this.props.filter, { keywords: event.target.value });
-    this.props.onChange(newFilter)
+    this.setState({ keywords: event.target.value })
+  }
+
+  onKeywordsKeyPress = event => {
+    if (event.key === 'Enter') {
+      const newFilter = Object.assign({}, this.props.filter, { keywords: this.state.keywords });
+      this.props.onChange(newFilter)
+    }
   }
 
   render () {
-    const { sort, order, genre, keywords } = this.props.filter
+    const { keywords } = this.state
+    const { sort, order, genre } = this.props.filter
+
     return (
       <div className="filters">
         <div className="filter">
           <label>Search</label>
           <div>
-            <input className="input-search" value={keywords} onChange={this.onKeywordsChange} style={{ width: 300 }} />
+            <input className="input-search"
+                   value={keywords}
+                   onChange={this.onKeywordsChange}
+                   onKeyPress={this.onKeywordsKeyPress}
+                   style={{ width: 300 }}/>
           </div>
         </div>
         <div className="filter">
@@ -52,11 +70,13 @@ export default class Filters extends React.Component {
         </div>
         <div className="filter">
           <label>Sort</label>
-          <Select value={sort} options={SORT_OPTIONS} onChange={this.onSortChange} style={{ width: 200 }} clearable={false}/>
+          <Select value={sort} options={SORT_OPTIONS} onChange={this.onSortChange} style={{ width: 200 }}
+                  clearable={false}/>
         </div>
         <div className="filter">
           <label>Order</label>
-          <Select value={order} options={ORDER_OPTIONS} onChange={this.onOrderChange} style={{ width: 200 }} clearable={false}/>
+          <Select value={order} options={ORDER_OPTIONS} onChange={this.onOrderChange} style={{ width: 200 }}
+                  clearable={false}/>
         </div>
       </div>
     )
