@@ -37,7 +37,6 @@ list {
 .header {
   background-color: #FAFAFA;
   border-bottom: 1px solid #E2E2E2;
-  margin-bottom: 10px;
 
   ul {
     list-style: none;
@@ -72,13 +71,13 @@ list {
   .poster-grid-item {
     margin-right: 7px;
     margin-bottom: 7px;
-    width: 200px;
+    width: 97px;
   }
 
   .poster-grid-poster {
     display: block;
-    width: 200px;
-    height: 285px;
+    width: 97px;
+    //height: 285px;
     margin-bottom: 7px;
   }
 
@@ -107,11 +106,9 @@ list {
 .show {
 
   .show-header {
-    display: flex;
-    margin: 7px;
 
     .show-poster {
-      width: 130px;
+      width: 100%;
     }
 
     .show-poster img {
@@ -119,13 +116,11 @@ list {
     }
 
     .show-info {
-      flex: 1;
       margin-left: 7px;
     }
 
     .show-title {
       font-size: 18px;
-      font-weight: bold;
       color: #333;
       margin-bottom: 7px;
     }
@@ -138,22 +133,59 @@ list {
   }
 
   .show-content {
-    margin: 7px;
-    display: flex;
+
+  }
+
+  .show-seasons-action {
+    text-align: right;
+    padding: 7px;
   }
 
   .show-seasons {
-    width: 130px;
+
   }
 
   .show-episodes {
-    flex: 1;
-    margin-left: 7px;
+
   }
 
   .show-episode {
     margin-left: 7px;
     width: 50%;
+  }
+
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding-top: 36px;
+
+  &.open {
+    display: block;
+  }
+
+  .close {
+    background: #DE111E;
+    padding: 7px;
+    cursor: pointer;
+    font-size: 14px;
+    outline: none;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    color: @red;
+    border: 1px solid @red;
+    line-height: 14px
   }
 
 }
@@ -165,7 +197,7 @@ ul.link-list {
 
   li a {
     display: block;
-    padding: 7px;
+    padding: 18px 7px;
     border-bottom: 1px solid #E2E2E2;
 
     &:hover, &.active {

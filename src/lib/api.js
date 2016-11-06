@@ -32,7 +32,7 @@ class Api {
 
   async playMagnet (magnet) {
     const query = {magnet: encodeURIComponent(magnet)};
-    const response = await fetch(`http://localhost:3000/api/play?${qs.stringify(query)}`)
+    const response = await fetch(`/api/play?${qs.stringify(query)}`)
     return await response.json();
   }
 

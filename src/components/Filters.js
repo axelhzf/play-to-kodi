@@ -61,7 +61,7 @@ export default class Filters extends React.Component {
                    value={keywords}
                    onChange={this.onKeywordsChange}
                    onKeyPress={this.onKeywordsKeyPress}
-                   style={{ width: 300 }}/>
+                   style={{ width: 200 }}/>
           </div>
         </div>
         <div className="filter">

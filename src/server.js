@@ -20,6 +20,8 @@ if (process.env.NODE_ENV === "development") {
 app.get("/api/play", async (req, res) => {
   const {magnet} = req.query
 
+  console.log("playing magnet", magnet)
+
   const body = {
     jsonrpc: '2.0',
     method: 'Player.Open',
@@ -51,6 +53,7 @@ app.use(function (req, res) {
 <html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
     <link rel="stylesheet" href="/build/style.css">
 </head>

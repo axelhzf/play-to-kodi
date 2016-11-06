@@ -3,10 +3,13 @@ import api from '../lib/api'
 import _ from 'lodash'
 import Link from '../components/Link'
 import moment from 'moment'
+import classNames from 'classnames'
 
 export default class ShowScreen extends React.Component {
 
-  state = {}
+  state = {
+    seasonsModalVisible: false
+  }
 
   componentDidMount () {
     this.fetchShow()
@@ -43,13 +46,13 @@ export default class ShowScreen extends React.Component {
       <div className="show-header">
 
         <div className="show-poster">
-          <img src={show.images.poster}/>
+          <img src={show.images.fanart}/>
         </div>
 
         <div className="show-info">
           <div className="show-title">{show.title}</div>
-          <div className="show-subtitle">Year:{show.year}
-            Rating: {show.rating.percentage}/100 {show.network} {show.status} {show.runtime}min
+          <div className="show-subtitle">
+            {show.year} {show.rating.percentage}/100 {show.network} {show.status} {show.runtime}min
           </div>
           <div className="show-synopsis">{show.synopsis}</div>
         </div>
@@ -58,8 +61,17 @@ export default class ShowScreen extends React.Component {
     )
   }
 
+  showSeasonsModal = () => {
+    this.setState({seasonsModalVisible: true})
+  }
+
+  hideSeasonsModal = () => {
+    this.setState({seasonsModalVisible: false})
+  }
+
   renderSeasons () {
-    const { show } = this.state
+    const { show, seasonsModalVisible } = this.state
+    const seasonId = this.getIntParameter("seasonId")
 
     const seasonsIds = _.chain(show.episodes)
       .map("season")
@@ -68,15 +80,23 @@ export default class ShowScreen extends React.Component {
       .value()
 
     return (
-      <ul className="link-list show-seasons">
-        {seasonsIds.map(seasonId => (
-          <li key={seasonId}>
-            <Link className="show-season" to={`/shows/${show.imdb_id}/seasons/${seasonId}`}>
-              Season {seasonId}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div>
+        <div className="show-seasons-action">
+          <button onClick={this.showSeasonsModal}>Season {seasonId} ⌄</button>
+        </div>
+        <div className={classNames("modal", {open: seasonsModalVisible})}>
+          <button className="close" onClick={this.hideSeasonsModal}>x</button>
+          <ul className="link-list show-seasons">
+            {seasonsIds.map(seasonId => (
+              <li key={seasonId}>
+                <Link className="show-season" to={`/shows/${show.imdb_id}/seasons/${seasonId}`} onClick={this.hideSeasonsModal}>
+                  Season {seasonId}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     )
   }
 
