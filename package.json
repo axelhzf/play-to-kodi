@@ -14,7 +14,6 @@
     "react-router": "^3.0.0",
     "react-select": "^1.0.0-rc.2",
     "request": "^2.78.0",
-    "sharp": "^0.16.2",
     "webpack-dev-middleware": "^1.8.4"
   },
   "devDependencies": {

@@ -4,7 +4,6 @@ var express = require('express')
 var webpackDevMiddleware = require("webpack-dev-middleware");
 var webpack = require("webpack");
 var path = require("path")
-var sharp = require('sharp');
 var http = require('http')
 var fs = require('fs')
 var request = require('request')
@@ -20,44 +19,6 @@ if (process.env.NODE_ENV === "development") {
 } else {
   app.use("/build", express.static(path.join(__dirname, '..', 'build')))
 }
-
-app.get("/images", (req, res) => {
-
-  const {url, width, height} = req.query
-
-  const cacheFile = path.join(__dirname, "..", ".cache", `${width}x${height}-${encodeURIComponent(url)}`)
-
-  fs.stat(cacheFile, (err, stats) => {
-    if (err && err.code !== "ENOENT") {
-      console.error(err)
-      return res.sendStatus(500)
-    }
-    if (stats) return res.sendFile(cacheFile)
-
-    var transformer = sharp()
-      .resize(parseInt(width, 10), parseInt(height, 10))
-      .on('error', function sharpError(err) {
-        console.error(err)
-        res.sendStatus(500);
-      });
-
-    try {
-      request(url)
-        .pipe(transformer)
-        .pipe(fs.createWriteStream(cacheFile))
-        .on('close', () => {
-          res.sendFile(cacheFile, { maxAge: 0 })
-        })
-        .on('error', function (err) {
-          console.error(err)
-          res.sendStatus(500);
-        });
-    } catch (e) {
-      res.sendStatus(500)
-    }
-  });
-
-})
 
 app.get("/api/play", (req, res) => {
   const {magnet} = req.query
