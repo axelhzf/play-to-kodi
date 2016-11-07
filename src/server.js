@@ -48,7 +48,7 @@ app.get("/api/play", (req, res) => {
     .catch(e => res.sendStatus(500))
 })
 
-app.get("/update", (req, res) => {
+app.all("/update", (req, res) => {
   const out = child_process.execSync('git pull')
   res.send({success: true, log: out.toString('utf8')})
   child_process.execSync('pm2 restart play-to-kodi')
