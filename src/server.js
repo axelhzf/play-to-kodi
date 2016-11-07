@@ -30,12 +30,12 @@ app.get("/api/play", (req, res) => {
     id: 1,
     params: {
       item: {
-        file: `plugin://plugin.video.xbmctorrent/play/${magnet}`
+        file: `plugin://plugin.video.quasar/play?uri=${magnet}`
       }
     }
   };
 
-  fetch('http://192.168.1.39/jsonrpc', {
+  fetch('http://192.168.1.39:8080/jsonrpc', {
       method: 'POST',
       body: JSON.stringify(body),
       headers: {
@@ -45,12 +45,18 @@ app.get("/api/play", (req, res) => {
     })
     .then(response => response.json())
     .then(body => res.send(body))
-    .catch(e => res.sendStatus(500))
+    .catch(e => {
+      console.error(e)
+      res.sendStatus(500)
+    })
 })
 
 app.all("/update", (req, res) => {
-  const out = child_process.execSync('git pull')
-  res.send({success: true, log: out.toString('utf8')})
+  let log = "> git pull\n";
+  log += child_process.execSync('git pull').toString("utf-8")
+  log += "\n > npm run build\n";
+  log += child_process.execSync('npm run build').toString("utf-8")
+  res.send({success: true, log})
   child_process.execSync('pm2 restart play-to-kodi')
 });
 
