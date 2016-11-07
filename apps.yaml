@@ -1,0 +1,5 @@
+apps:
+  - script: ./src/server.js
+    name: 'play-to-kodi'
+    env:
+      NODE_ENV: production
