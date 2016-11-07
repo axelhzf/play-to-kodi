@@ -7,6 +7,7 @@ var path = require("path")
 var http = require('http')
 var fs = require('fs')
 var request = require('request')
+var child_process = require('child_process')
 
 
 var app = express()
@@ -46,6 +47,12 @@ app.get("/api/play", (req, res) => {
     .then(body => res.send(body))
     .catch(e => res.sendStatus(500))
 })
+
+app.get("/update", (req, res) => {
+  const out = child_process.execSync('git pull')
+  res.send({success: true, log: out.toString('utf8')})
+  child_process.execSync('pm2 restart play-to-kodi')
+});
 
 app.use(function (req, res) {
   res.send(`
