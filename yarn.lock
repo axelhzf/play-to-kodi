@@ -2970,7 +2970,7 @@ rc@^1.0.1, rc@~1.1.6:
     minimist "^1.2.0"
     strip-json-comments "~1.0.4"
 
-react:
+react, "react@^0.14.2 || ^15.0.0-0":
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"
   dependencies:
@@ -2982,6 +2982,13 @@ react-dom:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
 
+react-gateway:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-gateway/-/react-gateway-2.3.0.tgz#4fa70d5511e1d6b8d82c396860cba9a0be48d2c4"
+  dependencies:
+    react "^0.14.2 || ^15.0.0-0"
+    react-prop-types "^0.4.0"
+
 react-infinite-scroller:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-infinite-scroller/-/react-infinite-scroller-1.0.1.tgz#cee3f47212ec5ee04523e6aa632779cd0ec56634"
@@ -2989,6 +2996,12 @@ react-infinite-scroller:
 react-input-autosize@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-input-autosize/-/react-input-autosize-1.1.0.tgz#3fe1ac832387d8abab85f6051ceab1c9e5570853"
+
+react-prop-types@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/react-prop-types/-/react-prop-types-0.4.0.tgz#f99b0bfb4006929c9af2051e7c1414a5c75b93d0"
+  dependencies:
+    warning "^3.0.0"
 
 react-relative-portal:
   version "1.1.7"

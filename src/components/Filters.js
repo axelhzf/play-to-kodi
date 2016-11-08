@@ -23,7 +23,7 @@ export default class Filters extends React.Component {
     this.initializeTempFilter();
   }
 
-  componentDidReceiveProps(nextProps) {
+  componentDidReceiveProps (nextProps) {
     this.initializeTempFilter();
   }
 
@@ -32,13 +32,13 @@ export default class Filters extends React.Component {
     this.props.onClose({ keywords, sort, order, genre });
   }
 
-  initializeTempFilter() {
+  initializeTempFilter () {
     this.setState(this.props.filter)
   }
 
   render () {
     const { keywords } = this.state
-    const {  } = this.props.filter
+    const {} = this.props.filter
 
     return (
       <Modal open={this.props.open} onOk={this.onOk} title="Filter">
@@ -48,13 +48,26 @@ export default class Filters extends React.Component {
           <div className="filter">
             <label>Keywords</label>
             <div>
-              <input className="input-search" value={keywords} onChange={e => this.setState({ keywords: e.target.value })}/>
+              <input className="input-search" value={keywords}
+                     onChange={e => this.setState({ keywords: e.target.value })}/>
             </div>
           </div>
 
-          <FormRowSelect label="Sort" value={this.state.sort} options={SORT_OPTIONS} onChange={sort => this.setState({sort})}/>
-          <FormRowSelect label="Order" value={this.state.order} options={ORDER_OPTIONS} onChange={order => this.setState({order})}/>
-          <FormRowSelect label="Genre" value={this.state.genre} options={GENRE_OPTIONS} onChange={genre => this.setState({genre})}/>
+          <FormRowSelect label="Sort" value={this.state.sort}
+                         options={SORT_OPTIONS}
+                         onChange={sort => this.setState({ sort })}
+                         nullable={false}
+          />
+          <FormRowSelect label="Order" value={this.state.order}
+                         options={ORDER_OPTIONS}
+                         onChange={order => this.setState({ order })}
+                         nullable={false}
+          />
+          <FormRowSelect label="Genre" value={this.state.genre}
+                         options={GENRE_OPTIONS}
+                         onChange={genre => this.setState({ genre })}
+
+          />
 
         </div>
 
@@ -64,28 +77,37 @@ export default class Filters extends React.Component {
 
 }
 
-  class FormRowSelect extends React.Component {
+class FormRowSelect extends React.Component {
 
   state = {
     open: false
   }
 
-  onSelectOption(option) {
+  static propTypes = {
+    label: PropTypes.string.isRequired,
+    options: PropTypes.array.isRequired,
+    onChange: PropTypes.func,
+    nullable: PropTypes.bool
+  }
+
+  static defaultProps = {
+    nullable: true
+  }
+
+  onSelectOption (option) {
     this.setState({ open: false })
     this.props.onChange(option.value)
   }
 
   render () {
-    const {label, value, options, onChange} = this.props;
-    const valueLabel = _.get(_.find(options, {value}), "label")
+    const { label, value, options, nullable } = this.props;
+    const valueLabel = _.get(_.find(options, { value }), "label")
 
-    const visibleOptions = [
-      {value: undefined, label: "None"}
-    ].concat(options)
+    const visibleOptions = !nullable ? options :  [ { value: undefined, label: "None" } ].concat(options)
 
     return (
       <div className="form-select">
-        <div className="filter filter-select" onClick={() => this.setState({open: true})}>
+        <div className="filter filter-select" onClick={() => this.setState({ open: true })}>
           <div className="filter-label">{label}</div>
           <div className="filter-content">{valueLabel}</div>
           <div className="filter-icon"><i className="icon ion-ios-arrow-right"/></div>

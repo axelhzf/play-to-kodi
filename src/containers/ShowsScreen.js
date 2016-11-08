@@ -3,6 +3,7 @@ import api from '../lib/api'
 import ShowsGrid from '../components/ShowsGrid'
 import Filters from '../components/Filters'
 import InfiniteScroll from 'react-infinite-scroller'
+import {Gateway} from 'react-gateway'
 
 export default class ShowsScreen extends React.Component {
 
@@ -75,9 +76,9 @@ export default class ShowsScreen extends React.Component {
     return (
       <div>
 
-        <button onClick={() => this.setState({filterOpen: true})}>
-          Filter <i className="icon ion-search"/>
-        </button>
+        <Gateway into="header-right">
+          <button onClick={() => this.setState({filterOpen: true})}><i className="icon ion-search"/></button>
+        </Gateway>
 
         <Filters
           open={this.state.filterOpen}
