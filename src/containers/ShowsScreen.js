@@ -7,7 +7,8 @@ import InfiniteScroll from 'react-infinite-scroller'
 export default class ShowsScreen extends React.Component {
 
   state = {
-    shows: []
+    shows: [],
+    filterOpen: false
   }
 
   componentDidMount () {
@@ -19,7 +20,10 @@ export default class ShowsScreen extends React.Component {
     this.setState({ shows })
   }
 
-  onChangeFilter = (filter) => {
+  onCloseFilter = (filter) => {
+    console.log("close filter");
+    this.setState({filterOpen: false})
+
     this.props.router.replace({
       pathname: '/shows',
       query: filter
@@ -49,6 +53,7 @@ export default class ShowsScreen extends React.Component {
     const currentFilter = this.getFilter(this.props)
 
     if (!_.isEqual(prevFilter, currentFilter)) {
+      console.log("component did update")
       this.fetchShows()
     }
   }
@@ -69,12 +74,21 @@ export default class ShowsScreen extends React.Component {
 
     return (
       <div>
-        <Filters filter={filter} onChange={this.onChangeFilter}/>
+
+        <button onClick={() => this.setState({filterOpen: true})}>
+          Filter <i className="icon ion-search"/>
+        </button>
+
+        <Filters
+          open={this.state.filterOpen}
+          onClose={this.onCloseFilter}
+          filter={filter}
+        />
 
         <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore}
-          hasMore={true}
+          hasMore={false} //improve this
           loader={<div className="loader">Loading ...</div>}
         >
           <ShowsGrid shows={shows}/>

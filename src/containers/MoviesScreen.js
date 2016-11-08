@@ -19,7 +19,8 @@ export default class MoviesScreen extends React.Component {
     this.setState({ movies })
   }
 
-  onChangeFilter = (filter) => {
+  onCloseFilter = (filter) => {
+    this.setState({filterOpen: false})
     this.props.router.replace({
       pathname: '/movies',
       query: filter
@@ -69,7 +70,7 @@ export default class MoviesScreen extends React.Component {
 
     return (
       <div>
-        <Filters filter={filter} onChange={this.onChangeFilter} />
+        <Filters filter={filter} onChange={this.onCloseFilter} />
 
         <InfiniteScroll
           pageStart={0}

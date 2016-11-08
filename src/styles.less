@@ -164,28 +164,35 @@ list {
   width: 100%;
   height: 100%;
   background: #fff;
-  padding-top: 36px;
+  overflow-y: scroll;
 
   &.open {
     display: block;
   }
 
-  .close {
-    background: #DE111E;
+  .modal-header {
+    display: flex;
+    align-content: center;
     padding: 7px;
-    cursor: pointer;
-    font-size: 14px;
-    outline: none;
-    border-radius: 100%;
-    width: 30px;
-    height: 30px;
-    position: absolute;
-    right: 5px;
-    top: 5px;
-    background: none;
-    color: @red;
-    border: 1px solid @red;
-    line-height: 14px
+    background-color: #FAFAFA;
+    border-bottom: 1px solid #E2E2E2;
+
+    .modal-close {
+
+    }
+
+    .modal-ok {
+
+    }
+
+    .modal-title {
+      flex: 1;
+      text-align: center;
+      font-size: 22px;
+      line-height: 31px;
+
+    }
+
   }
 
 }
@@ -221,14 +228,35 @@ button {
 
 
 .filters {
-  background-color: #FAFAFA;
   padding: 7px;
   margin-bottom: 7px;
 
   .filter {
-    display: inline-block;
+    display: block;
     vertical-align: middle;
     margin-right: 7px;
+    border-bottom: 1px solid #E2E2E2;
+  }
+
+  .filter-select {
+    display: flex;
+    line-height: 20px;
+    padding: 14px 0;
+
+    .filter-label {
+      font-weight: bold;
+    }
+
+    .filter-content {
+      flex: 1;
+      text-align: right;
+    }
+
+    .filter-icon {
+      margin-left: 7px;
+    }
+
+
   }
 
   label {
@@ -245,6 +273,30 @@ button {
     font-size: 14px;
     padding: 8px;
     outline: none;
+    width: 100%;
+    margin-bottom: 7px;
+  }
+
+}
+
+.form-select {
+
+  .form-select-option {
+    padding: 0 7px;
+    display: flex;
+    border-bottom: 1px solid #E2E2E2;
+    line-height: 50px;
+  }
+
+  .form-select-label {
+    font-weight: bold;
+    flex: 1;
+  }
+
+  .form-select-icon {
+    width: 20px;
+    color: @red;
+    font-size: 24px;
   }
 
 }
