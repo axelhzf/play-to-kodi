@@ -30,7 +30,7 @@ app.get("/api/play", (req, res) => {
     id: 1,
     params: {
       item: {
-        file: `plugin://plugin.video.quasar/play?uri=${magnet}`
+        file: `plugin://plugin.video.xbmctorrent/play/${magnet}`
       }
     }
   };
