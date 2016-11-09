@@ -160,12 +160,27 @@ list {
   }
 
   .show-episodes {
-
   }
 
   .show-episode {
-    margin-left: 7px;
-    width: 50%;
+    padding: 14px 7px;
+    border-bottom: 1px solid #E2E2E2;
+    display: flex;
+
+    &:active {
+      background-color: #ddd;
+    }
+
+    .content {
+      flex: 1;
+    }
+
+    .right-icon {
+      width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
 }

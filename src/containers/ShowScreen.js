@@ -32,7 +32,6 @@ export default class ShowScreen extends React.Component {
         <div className="show-content">
           {this.renderSeasons()}
           {this.renderActiveSeasonEpisodes()}
-          {this.renderActiveEpisode()}
         </div>
 
       </div >
@@ -62,11 +61,11 @@ export default class ShowScreen extends React.Component {
   }
 
   showSeasonsModal = () => {
-    this.setState({seasonsModalVisible: true})
+    this.setState({ seasonsModalVisible: true })
   }
 
   hideSeasonsModal = () => {
-    this.setState({seasonsModalVisible: false})
+    this.setState({ seasonsModalVisible: false })
   }
 
   renderSeasons () {
@@ -89,7 +88,8 @@ export default class ShowScreen extends React.Component {
           <ul className="link-list show-seasons">
             {seasonsIds.map(seasonId => (
               <li key={seasonId}>
-                <Link className="show-season" to={`/shows/${show.imdb_id}/seasons/${seasonId}`} onClick={this.hideSeasonsModal}>
+                <Link className="show-season" to={`/shows/${show.imdb_id}/seasons/${seasonId}`}
+                      onClick={this.hideSeasonsModal}>
                   Season {seasonId}
                 </Link>
               </li>
@@ -114,40 +114,21 @@ export default class ShowScreen extends React.Component {
 
     return (
       <ul className="link-list show-episodes">
-        {episodes.map(episode => (
-          <li key={episode.tvdb_id} className="show-episodes-item">
-            <Link to={`/shows/${show.imdb_id}/seasons/${seasonId}/episodes/${episode.episode}`}>
-              {this.getEpisodeId(episode)} - {episode.title}
-            </Link>
-          </li>
-        ))}
+        {episodes.map(episode => {
+          const first_aired = moment.unix(episode.first_aired).format("LL")
+          return (
+            <li key={episode.tvdb_id} className="show-episode" onClick={() => this.playEpisode(episode)}>
+              <div className="content">
+                <div><strong>{this.getEpisodeId(episode)} - {episode.title}</strong></div>
+                <div>First Aired: {first_aired}</div>
+              </div>
+              <div className="right-icon">
+                <i className="icon ion-ios-play"/>
+              </div>
+            </li>
+          )
+        })}
       </ul>
-    )
-  }
-
-  renderActiveEpisode () {
-    const { show } = this.state
-    const seasonId = this.getIntParameter("seasonId")
-    const episodeId = this.getIntParameter("episodeId")
-
-    const episode = _.find(show.episodes, { season: seasonId, episode: episodeId })
-
-    if (!episode) return null;
-
-    const first_aired = moment.unix(episode.first_aired).format("LL")
-
-    console.log(episode)
-
-    return (
-      <div className="show-episode">
-        <h2>{episode.title}</h2>
-        <p>Season {episode.season}, Episode {episode.episode}</p>
-        <p>Aired Date: {first_aired}</p>
-        <p>{episode.overview}</p>
-        <p>
-          <button onClick={() => this.playEpisode(episode)}>Play now</button>
-        </p>
-      </div>
     )
   }
 
@@ -164,9 +145,9 @@ export default class ShowScreen extends React.Component {
     return `S${_.padStart(episode.season.toString(), 2, "0")}E${_.padStart(episode.episode.toString(), 2, "0")}`;
   }
 
-  async playEpisode(episode) {
+  async playEpisode (episode) {
     try {
-      const torrent = episode.torrents["1080p"] || episode.torrents["720p"] || episode.torrents["480p"];
+      const torrent = episode.torrents[ "1080p" ] || episode.torrents[ "720p" ] || episode.torrents[ "480p" ];
       const magnet = torrent.url;
       await api.playMagnet(magnet);
     } catch (e) {
