@@ -9,7 +9,8 @@ export default class ShowsScreen extends React.Component {
 
   state = {
     shows: [],
-    filterOpen: false
+    filterOpen: false,
+    hasMore: true
   }
 
   componentDidMount () {
@@ -18,11 +19,10 @@ export default class ShowsScreen extends React.Component {
 
   async fetchShows () {
     const shows = await api.shows(1, this.getFilter(this.props))
-    this.setState({ shows })
+    this.setState({ shows, hasMore: shows.length > 0 })
   }
 
   onCloseFilter = (filter) => {
-    console.log("close filter");
     this.setState({filterOpen: false})
 
     this.props.router.replace({
@@ -54,7 +54,6 @@ export default class ShowsScreen extends React.Component {
     const currentFilter = this.getFilter(this.props)
 
     if (!_.isEqual(prevFilter, currentFilter)) {
-      console.log("component did update")
       this.fetchShows()
     }
   }
@@ -64,7 +63,7 @@ export default class ShowsScreen extends React.Component {
 
     const newShows = await api.shows(page, this.getFilter(this.props))
     const shows = [].concat(this.state.shows, newShows)
-    this.setState({ shows })
+    this.setState({ shows, hasMore: newShows.length > 0 })
   }
 
   render () {
@@ -89,7 +88,7 @@ export default class ShowsScreen extends React.Component {
         <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore}
-          hasMore={false} //improve this
+          hasMore={this.state.hasMore}
           loader={<div className="loader">Loading ...</div>}
         >
           <ShowsGrid shows={shows}/>

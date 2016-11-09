@@ -3,11 +3,14 @@ import api from '../lib/api'
 import MoviesGrid from '../components/MoviesGrid'
 import Filters from '../components/Filters'
 import InfiniteScroll from 'react-infinite-scroller'
+import {Gateway} from 'react-gateway'
 
 export default class MoviesScreen extends React.Component {
 
   state = {
-    movies: []
+    movies: [],
+    hasMore: true,
+    filterOpen: false
   }
 
   componentDidMount () {
@@ -16,7 +19,7 @@ export default class MoviesScreen extends React.Component {
 
   async fetchMovies () {
     const movies = await api.movies(1, this.getFilter(this.props))
-    this.setState({ movies })
+    this.setState({ movies, hasMore: movies.length > 0 })
   }
 
   onCloseFilter = (filter) => {
@@ -59,7 +62,7 @@ export default class MoviesScreen extends React.Component {
 
     const newMovies = await api.movies(page, this.getFilter(this.props))
     const movies = [].concat(this.state.movies, newMovies)
-    this.setState({ movies })
+    this.setState({ movies, hasMore: newMovies.length > 0 })
   }
 
   render () {
@@ -70,12 +73,21 @@ export default class MoviesScreen extends React.Component {
 
     return (
       <div>
-        <Filters filter={filter} onChange={this.onCloseFilter} />
+
+        <Gateway into="header-right">
+          <button onClick={() => this.setState({filterOpen: true})}><i className="icon ion-search"/></button>
+        </Gateway>
+
+        <Filters
+          open={this.state.filterOpen}
+          onClose={this.onCloseFilter}
+          filter={filter}
+        />
 
         <InfiniteScroll
           pageStart={0}
           loadMore={this.loadMore}
-          hasMore={true}
+          hasMore={this.state.hasMore}
           loader={<div className="loader">Loading ...</div>}
         >
           <MoviesGrid movies={movies}/>
