@@ -1,4 +1,4 @@
-import React, {PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 import hunt from 'huntjs'
 
 export default class Image extends React.Component {
@@ -9,8 +9,12 @@ export default class Image extends React.Component {
     height: PropTypes.number
   }
 
-  componentDidMount() {
-    this.img.onload = () => this.img.className="loaded";
+  componentDidMount () {
+    this.img.onload = () => {
+      if (this.img) {
+        this.img.className = "loaded";
+      }
+    }
 
     hunt(this.img, {
       enter: () => {
@@ -22,11 +26,11 @@ export default class Image extends React.Component {
   }
 
   render () {
-    const {width, height} = this.props;
+    const { width, height } = this.props;
     return (
-        <div style={{width, height}} className="image">
-          <img style={{width, height}} ref={img => this.img = img}/>
-        </div>
+      <div style={{ width, height }} className="image">
+        <img style={{ width, height }} ref={img => this.img = img}/>
+      </div>
     )
   }
 
