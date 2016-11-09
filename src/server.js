@@ -54,6 +54,8 @@ app.get("/api/play", (req, res) => {
 app.all("/update", (req, res) => {
   let log = "> git pull\n";
   log += child_process.execSync('git pull').toString("utf-8")
+  log += "\n > yarn install\n";
+  log += child_process.execSync('yarn install').toString("utf-8")
   log += "\n > npm run build\n";
   log += child_process.execSync('npm run build').toString("utf-8")
   res.send({success: true, log})
