@@ -3,7 +3,7 @@ import api from '../lib/api'
 import _ from 'lodash'
 import Link from '../components/Link'
 import moment from 'moment'
-import classNames from 'classnames'
+import Modal from '../components/Modal'
 
 export default class ShowScreen extends React.Component {
 
@@ -84,8 +84,8 @@ export default class ShowScreen extends React.Component {
         <div className="show-seasons-action">
           <button onClick={this.showSeasonsModal}>Season {seasonId} ⌄</button>
         </div>
-        <div className={classNames("modal", {open: seasonsModalVisible})}>
-          <button className="close" onClick={this.hideSeasonsModal}>x</button>
+
+        <Modal title="Seasons" open={seasonsModalVisible}>
           <ul className="link-list show-seasons">
             {seasonsIds.map(seasonId => (
               <li key={seasonId}>
@@ -95,7 +95,8 @@ export default class ShowScreen extends React.Component {
               </li>
             ))}
           </ul>
-        </div>
+        </Modal>
+
       </div>
     )
   }
