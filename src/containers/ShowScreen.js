@@ -11,8 +11,17 @@ export default class ShowScreen extends React.Component {
     seasonsModalVisible: false
   }
 
-  componentDidMount () {
-    this.fetchShow()
+  async componentDidMount () {
+    await this.fetchShow()
+
+    const seasonId = this.getSeasonId()
+    if (!seasonId) {
+      const {show} = this.state;
+      const lastSeasonId = _.last(this.getSeasonsId());
+      this.props.router.replace({
+        pathname: `/shows/${show.imdb_id}/seasons/${lastSeasonId}`
+      })
+    }
   }
 
   async fetchShow () {
@@ -70,14 +79,8 @@ export default class ShowScreen extends React.Component {
 
   renderSeasons () {
     const { show, seasonsModalVisible } = this.state
-    const seasonId = this.getIntParameter("seasonId")
-
-    const seasonsIds = _.chain(show.episodes)
-      .map("season")
-      .uniq()
-      .orderBy()
-      .value()
-
+    const seasonId = this.getSeasonId()
+    const seasonsIds = this.getSeasonsId()
     return (
       <div>
         <div className="show-seasons-action">
@@ -141,10 +144,24 @@ export default class ShowScreen extends React.Component {
     return (<div>Loading</div>)
   }
 
+  getSeasonId () {
+    return this.getIntParameter("seasonId")
+  }
+
   getEpisodeId (episode) {
     return `S${_.padStart(episode.season.toString(), 2, "0")}E${_.padStart(episode.episode.toString(), 2, "0")}`;
   }
 
+  getSeasonsId () {
+    const {show} = this.state;
+    const seasonsIds = _.chain(show.episodes)
+      .map("season")
+      .uniq()
+      .orderBy()
+      .value()
+    return seasonsIds;
+  }
+  
   async playEpisode (episode) {
     try {
       const torrent = episode.torrents[ "1080p" ] || episode.torrents[ "720p" ] || episode.torrents[ "480p" ];
