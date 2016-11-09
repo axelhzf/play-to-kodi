@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
+import Image from './Image'
+
 
 export default class MoviesGrid extends React.Component {
 
@@ -11,7 +13,8 @@ export default class MoviesGrid extends React.Component {
         {movies.map((movie, index) =>(
           <div key={`${movie.imdb_id}_${index}`} className="poster-grid-item">
             <Link to={`/movies/${movie.imdb_id}`}>
-              <img className="poster-grid-poster" src={movie.images.poster}/>
+              <Image src={movie.images.poster} width={97} height={138}/>
+
               <div className="poster-grid-description">
                 <div className="title">{movie.title}</div>
                 <div className="description">Movie description</div>

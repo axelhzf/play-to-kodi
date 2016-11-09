@@ -1787,6 +1787,10 @@ https-browserify@0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-0.0.0.tgz#b3ffdfe734b2a3d4a9efd58e8654c91fce86eafd"
 
+huntjs:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/huntjs/-/huntjs-2.0.1.tgz#9af858d741f9ecaa4a8a34d073e446064a3b803c"
+
 iconv-lite@~0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.13.tgz#1f88aba4ab0b1508e8312acc39345f36e992e2f2"
