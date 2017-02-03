@@ -1,5 +1,7 @@
 const path = require("path")
+const autoprefixer = require('autoprefixer');
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const cssnext = require('postcss-cssnext');
 
 module.exports = {
   entry: './src/client',
@@ -9,7 +11,7 @@ module.exports = {
     publicPath: 'build'
   },
   resolve: {
-    extensions: ['', '.js', '.ts', '.tsx']
+    extensions: ['', '.scss', '.js', '.ts', '.tsx']
   },
   module: {
     loaders: [
@@ -20,19 +22,16 @@ module.exports = {
       },
       { test: /\.ts(x?)$/, loader: 'babel-loader!ts-loader' },
       {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')
+        test: /\.less$/,
+        loader: 'style-loader!css-loader!postcss-loader!less'
       },
       {
-        test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader!less')
-      },
-
+        test: /(\.css)$/,
+        loaders: ['style', 'css?sourceMap&modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss']
+      }
     ]
   },
-  plugins: [
-    new ExtractTextPlugin('style.css', { allChunks: true }),
-  ],
+  postcss: [cssnext],
   devServer: {
     host: "0.0.0.0",
     historyApiFallback: true
