@@ -7,6 +7,7 @@ import ShowsScreen from './containers/ShowsScreen'
 import ShowScreen from './containers/ShowScreen'
 import MoviesScreen from './containers/MoviesScreen'
 import MovieScreen from './containers/MovieScreen'
+import global from './styles/global';
 import './styles.less'
 
 const root = (
