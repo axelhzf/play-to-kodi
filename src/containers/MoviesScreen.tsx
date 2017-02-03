@@ -1,54 +1,68 @@
-import React from 'react'
+import * as React from 'react'
 import api from '../lib/api'
 import MoviesGrid from '../components/MoviesGrid'
 import Filters from '../components/Filters'
-import InfiniteScroll from 'react-infinite-scroller'
-import {Gateway} from 'react-gateway'
+import * as InfiniteScroll from 'react-infinite-scroller'
+import { Gateway } from 'react-gateway'
+import * as _ from 'lodash';
+import { LocationDescriptor, InjectedRouter } from '@types/react-router';
 
-export default class MoviesScreen extends React.Component {
+interface MoviesScreenProps {
+  location: LocationDescriptor,
+  router: InjectedRouter
+}
+
+interface MoviesScreenState {
+  movies: Movie[],
+  hasMore: boolean,
+  filterOpen: boolean,
+}
+
+export default class MoviesScreen extends React.Component<MoviesScreenProps, MoviesScreenState> {
 
   state = {
-    movies: [],
+    movies: [] as Movie[],
     hasMore: true,
     filterOpen: false
-  }
+  };
 
   componentDidMount () {
     this.fetchMovies()
   }
 
   async fetchMovies () {
-    const movies = await api.movies(1, this.getFilter(this.props))
+    const movies = await api.movies(1, this.getFilter(this.props));
     this.setState({ movies, hasMore: movies.length > 0 })
   }
 
-  onCloseFilter = (filter) => {
+  onCloseFilter = (filter: MoviesQuery) => {
     this.setState({filterOpen: false})
+
     this.props.router.replace({
       pathname: '/movies',
       query: filter
     })
   }
 
-  getFilter (props) {
+  getFilter (props: MoviesScreenProps) {
     if (!props) return {}
 
-    const defaultFilter = {
+    const defaultFilter: MoviesQuery = {
       sort: 'trending',
       order: -1,
       genre: null,
       keywords: ""
     }
-    let {sort, order, genre, keywords} = props.location.query;
+    let { sort, order, genre, keywords } = props.location.query as { [key: string]: string };
     return _.defaults({sort, order: this.parseInt(order), genre, keywords}, defaultFilter)
   }
 
-  parseInt(number) {
+  parseInt(number: string) {
     const int = parseInt(number, 10)
     return _.isNaN(int) ? undefined : int;
   }
 
-  componentDidUpdate (prevProps) {
+  componentDidUpdate (prevProps: MoviesScreenProps) {
     const prevFilter = this.getFilter(prevProps)
     const currentFilter = this.getFilter(this.props)
 
@@ -57,7 +71,7 @@ export default class MoviesScreen extends React.Component {
     }
   }
 
-  loadMore = async (page) => {
+  loadMore = async (page: number) => {
     if (page === 1) return;
 
     const newMovies = await api.movies(page, this.getFilter(this.props))

@@ -6,9 +6,9 @@ class Api {
   // TODO new endpoint? https://tv-v2.api-fetch.website no cors?
 
 
-  async movies (page = 1, query = {}) {
+  async movies (page = 1, query: MoviesQuery = {}): Promise<Movie[]> {
     const url = `${this.popcornEndpoint}/tv/movies/${page}`;
-    const response = await axios.get(url, { params: query });
+    const response = await axios.get<Movie[]>(url, { params: query });
     return response.data;
   }
 
