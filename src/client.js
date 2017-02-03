@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDom from 'react-dom'
 import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
-import 'isomorphic-fetch'
 import { GatewayProvider } from 'react-gateway'
 import App from './containers/App'
 import ShowsScreen from './containers/ShowsScreen'
