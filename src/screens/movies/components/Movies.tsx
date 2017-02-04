@@ -1,13 +1,12 @@
 import * as React from 'react';
-import MoviesGrid from './MoviesGrid';
 import * as R from 'ramda';
-import { Gateway } from 'react-gateway';
-import Loading from "components/Loading";
 import styled from 'styled-components';
+import AsyncItemPlaceholder from "components/AsyncItemPlaceholder";
 import Filter from "./Filter";
+import MoviesGrid from './MoviesGrid';
 
 interface MoviesScreenProps {
-  movies: any,
+  movies: AsyncItem<Movie>,
   query: MoviesQuery,
   fetchMovies: (query: MoviesQuery) => void,
   setQuery: (query: MoviesQuery) => void,
@@ -32,21 +31,16 @@ export default class Movies extends React.Component<MoviesScreenProps, null> {
     this.props.setQuery(query);
   };
 
-  renderContent() {
-    const { movies } = this.props;
-    if (!movies) return null;
-    if (movies.loading) return <Loading/>;
-    if (movies.error) return <div>Error</div>;
-    if (!movies.items) return null;
-    return <MoviesGrid movies={movies.items}/>;
-  }
+  renderMovies = (movies: Movie[]) => {
+    return <MoviesGrid movies={movies}/>;
+  };
 
   render () {
     const { query } = this.props;
     return (
       <Wrapper>
         <Filter query={query} onQueryChange={this.handleQueryChange} />
-        { this.renderContent() }
+        <AsyncItemPlaceholder item={this.props.movies} loaded={this.renderMovies} />
       </Wrapper>
     )
   }
