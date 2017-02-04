@@ -20,7 +20,8 @@ const mapStateToProps = (state, props) => {
     sort: 'trending',
     order: -1,
     genre: null,
-    keywords: ""
+    keywords: "",
+    page: 1,
   };
 
   const locationQuery = getLocationQuery(props.location);

@@ -10,8 +10,8 @@ export function* fetchMovies(): IterableIterator<any> {
     const {payload: {query}} = yield take(C.FETCH_MOVIES);
     try {
       const movies = yield call(api.movies, query);
-      const normalizedMovies = normalize(movies, schemas.movies);
-      const action = actions.fetchMoviesSuccess(normalizedMovies);
+      const data = normalize(movies, schemas.movies);
+      const action = actions.fetchMoviesSuccess(query, data);
       yield put(action);
     } catch (error) {
       yield put(actions.fetchMoviesError(error));
