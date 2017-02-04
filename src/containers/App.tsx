@@ -22,4 +22,4 @@ export default class App extends React.Component<null, null> {
 
 const Content = styled.div`
   margin-top: ${variables.headerHeight};
-`
+`;

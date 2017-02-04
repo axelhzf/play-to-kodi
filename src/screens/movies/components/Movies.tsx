@@ -1,9 +1,9 @@
 import * as React from 'react';
 import * as R from 'ramda';
-import styled from 'styled-components';
 import AsyncItemPlaceholder from "components/AsyncItemPlaceholder";
 import Filter from "./Filter";
 import MoviesGrid from './MoviesGrid';
+import Container from 'components/Container';
 
 interface MoviesScreenProps {
   movies: AsyncItem<Movie>,
@@ -38,16 +38,12 @@ export default class Movies extends React.Component<MoviesScreenProps, null> {
   render () {
     const { query } = this.props;
     return (
-      <Wrapper>
+      <Container>
         <Filter query={query} onQueryChange={this.handleQueryChange} />
         <AsyncItemPlaceholder item={this.props.movies} loaded={this.renderMovies} />
-      </Wrapper>
+      </Container>
     )
   }
 
 }
-
-const Wrapper = styled.div`
-  padding: 10px;
-`;
 

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Button} from "react-toolbox";
 import Image from 'components/Image';
-import Container from 'components/Containers';
+import Container from 'components/Container';
 import styled from "styled-components";
 import AsyncItemPlaceholder from "components/AsyncItemPlaceholder";
 

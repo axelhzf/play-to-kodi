@@ -2,13 +2,16 @@ import * as React from 'react';
 import { Link } from "react-router";
 import Image from 'components/Image';
 import styled from 'styled-components';
+import * as variables from 'styles/variables';
 
 interface MovieItemProps {
   movie: Movie
 }
 
 const imageRation = 750 / 500;
-const imageWidth = 150;
+const imageToShow = 5;
+const imageMarginRight = 7;
+const imageWidth = Math.floor((variables.containerWidth - ((imageToShow - 1) * imageMarginRight)) / imageToShow);
 
 export default class MovieItem extends React.Component<MovieItemProps, null> {
 
@@ -31,9 +34,13 @@ export default class MovieItem extends React.Component<MovieItemProps, null> {
 }
 
 const Wrapper = styled.div`
-  margin-right: 7px;
+  margin-right: ${imageMarginRight}px;
   margin-bottom: 7px;
   width: ${imageWidth}px;
+  
+  &:nth-child(${imageToShow}n) {
+    margin-right: 0;
+  }
 `;
 
 const Title = styled.div`
