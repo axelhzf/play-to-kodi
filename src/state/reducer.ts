@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import * as R from 'ramda';
-import movies from '../features/movies/state/reducer';
+import movies from '../screens/movies/state/reducer';
+import movie from '../screens/movie/state/reducer';
 
 const entities = (state = {}, action) => {
   const entities = R.path(["payload", "entities"])(action);
@@ -11,4 +12,5 @@ const entities = (state = {}, action) => {
 export default combineReducers({
   entities,
   movies,
+  movie,
 });

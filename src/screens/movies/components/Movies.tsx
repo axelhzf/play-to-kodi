@@ -54,6 +54,6 @@ export default class Movies extends React.Component<MoviesScreenProps, null> {
 }
 
 const Wrapper = styled.div`
-  padding: 0 10px;
+  padding: 10px;
 `;
 
