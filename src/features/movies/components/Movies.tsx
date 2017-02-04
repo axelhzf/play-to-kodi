@@ -1,15 +1,18 @@
-import * as React from 'react'
-import api from '../lib/api'
-import MoviesGrid from '../components/MoviesGrid'
-import Filters from '../components/Filters'
-import * as InfiniteScroll from 'react-infinite-scroller'
-import { Gateway } from 'react-gateway'
+import * as React from 'react';
+import MoviesGrid from './MoviesGrid';
+import Filters from '../../../components/Filters';
+import * as InfiniteScroll from 'react-infinite-scroller';
+import { Gateway } from 'react-gateway';
 import * as _ from 'lodash';
 import { LocationDescriptor, InjectedRouter } from '@types/react-router';
+import { ProgressBar } from 'react-toolbox';
+import Loading from "../../../components/Loading";
 
 interface MoviesScreenProps {
   location: LocationDescriptor,
-  router: InjectedRouter
+  router: InjectedRouter,
+  movies: any,
+  fetchMovies: () => void,
 }
 
 interface MoviesScreenState {
@@ -18,7 +21,7 @@ interface MoviesScreenState {
   filterOpen: boolean,
 }
 
-export default class MoviesScreen extends React.Component<MoviesScreenProps, MoviesScreenState> {
+export default class Movies extends React.Component<MoviesScreenProps, MoviesScreenState> {
 
   state = {
     movies: [] as Movie[],
@@ -27,12 +30,7 @@ export default class MoviesScreen extends React.Component<MoviesScreenProps, Mov
   };
 
   componentDidMount () {
-    this.fetchMovies()
-  }
-
-  async fetchMovies () {
-    const movies = await api.movies(1, this.getFilter(this.props));
-    this.setState({ movies, hasMore: movies.length > 0 })
+    this.props.fetchMovies()
   }
 
   onCloseFilter = (filter: MoviesQuery) => {
@@ -67,45 +65,33 @@ export default class MoviesScreen extends React.Component<MoviesScreenProps, Mov
     const currentFilter = this.getFilter(this.props)
 
     if (!_.isEqual(prevFilter, currentFilter)) {
-      this.fetchMovies()
+      //this.fetchMovies()
     }
   }
 
   loadMore = async (page: number) => {
     if (page === 1) return;
 
+/*
     const newMovies = await api.movies(page, this.getFilter(this.props))
     const movies = [].concat(this.state.movies, newMovies)
     this.setState({ movies, hasMore: newMovies.length > 0 })
+ */
   }
 
   render () {
-    const { movies } = this.state
-    if (!movies) return <div></div>
+    const { movies } = this.props;
+    console.log(movies);
+    if (!movies) return null;
 
-    const filter = this.getFilter(this.props)
+
+    if (movies.loading) return <Loading/>
+    if (movies.error) return <div>Error</div>;
+    if (!movies.items) return null;
 
     return (
       <div>
-
-        <Gateway into="header-right">
-          <button onClick={() => this.setState({filterOpen: true})}><i className="icon ion-search"/></button>
-        </Gateway>
-
-        <Filters
-          open={this.state.filterOpen}
-          onClose={this.onCloseFilter}
-          filter={filter}
-        />
-
-        <InfiniteScroll
-          pageStart={0}
-          loadMore={this.loadMore}
-          hasMore={this.state.hasMore}
-          loader={<div className="loader">Loading ...</div>}
-        >
-          <MoviesGrid movies={movies}/>
-        </InfiniteScroll>
+        <MoviesGrid movies={movies.items}/>
       </div>
     )
   }

@@ -1,31 +1,31 @@
 import * as axios from 'axios';
 
+const POPCORN_ENDPOINT = 'https://api-fetch.website';
+
 class Api {
 
-  popcornEndpoint = 'https://api-fetch.website';
   // TODO new endpoint? https://tv-v2.api-fetch.website no cors?
 
-
   async movies (page = 1, query: MoviesQuery = {}): Promise<Movie[]> {
-    const url = `${this.popcornEndpoint}/tv/movies/${page}`;
+    const url = `${POPCORN_ENDPOINT}/tv/movies/${page}`;
     const response = await axios.get<Movie[]>(url, { params: query });
     return response.data;
   }
 
   async movieDetails(imdbId: string) {
-    const url = `${this.popcornEndpoint}/tv/movie/${imdbId}`;
+    const url = `${POPCORN_ENDPOINT}/tv/movie/${imdbId}`;
     const response = await axios.get(url);
     return response.data;
   }
 
   async shows (page = 1, query = {}) {
-    const url = `${this.popcornEndpoint}/tv/shows/${page}`;
+    const url = `${POPCORN_ENDPOINT}/tv/shows/${page}`;
     const response = await axios.get(url);
     return response.data;
   }
 
   async showDetails (imdbId: string) {
-    const url = `${this.popcornEndpoint}/tv/show/${imdbId}`;
+    const url = `${POPCORN_ENDPOINT}/tv/show/${imdbId}`;
     const response = await axios.get(url);
     return await response.data;
   }

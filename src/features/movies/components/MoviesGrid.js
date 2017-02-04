@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import { Link } from 'react-router'
-import Image from './Image'
+import Image from '../../../components/Image'
 
 
 export default class MoviesGrid extends React.Component {
