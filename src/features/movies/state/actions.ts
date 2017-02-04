@@ -1,7 +1,7 @@
 import * as C from './constants';
 
 export const fetchMovies = (query: MoviesQuery) => {
-  return { type : C.FETCH_MOVIES }
+  return { type : C.FETCH_MOVIES, payload: { query } }
 }
 
 export const fetchMoviesSuccess = (payload: any) => {

@@ -1,16 +1,19 @@
 import * as React from 'react';
 import * as ReactDom from 'react-dom';
-import * as global from './styles/global';
+import applyGlobalStyles from './styles/global';
 import { Provider } from 'react-redux';
 import store from './state/store';
 import routes from './routes/routes';
 import { Router, browserHistory } from 'react-router';
+import { GatewayProvider } from 'react-gateway';
 
-import './styles.less'
+applyGlobalStyles();
 
 const root = (
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <GatewayProvider>
+      <Router history={browserHistory} routes={routes} />
+    </GatewayProvider>
   </Provider>
 );
 
