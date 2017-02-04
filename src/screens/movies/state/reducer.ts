@@ -10,16 +10,6 @@ function movies(state = {}, action) {
   return state;
 }
 
-function movie(state = {}, action) {
-  switch (action.type) {
-    case C.FETCH_MOVIE: return { loading: true, item: null, error: null };
-    case C.FETCH_MOVIE_SUCCESS: return { loading: false, item: action.payload.result };
-    case C.FETCH_MOVIE_ERROR: return { loading: false, error: action.error };
-  }
-  return state;
-}
-
 export default combineReducers({
-  movies,
-  movie,
+  movies
 })

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link } from "react-router";
-import Image from '../../../components/Image';
+import Image from 'components/Image';
 import styled from 'styled-components';
 
 interface MovieItemProps {

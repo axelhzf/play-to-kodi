@@ -1,7 +1,7 @@
 import {take, put, call, fork} from 'redux-saga/effects';
+import api from 'lib/api';
 import * as actions from './actions';
 import * as C from './constants';
-import api from '../../../lib/api';
 import {normalize} from 'normalizr';
 import * as schemas from './schemas';
 

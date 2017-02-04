@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Dialog, Button} from "react-toolbox";
-
-import Image from '../../../components/Image';
-import Loading from '../../../components/Loading';
+import {Button} from "react-toolbox";
+import Image from 'components/Image';
+import Loading from 'components/Loading';
 
 interface MovieProps {
   fetchMovie: () => void,
@@ -15,13 +14,12 @@ export default class Movie extends React.Component<MovieProps, null> {
   }
 
   render() {
-    const { movie } = this.props;
-    console.log(movie);
+    const {movie} = this.props;
     if (movie.loading) return <Loading />;
     if (!movie.item) return null;
     return (
       <div>
-        <Image src={movie.item.images.fanart} width={320} height={180}/>
+        <Image src={movie.item.images.fanart} width={320} height={180} />
         <div className="movie-content">
           <h3>{movie.item.title}</h3>
           <p>{movie.item.synopsis}</p>

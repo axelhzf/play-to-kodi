@@ -2,7 +2,7 @@ import * as React from 'react';
 import MoviesGrid from './MoviesGrid';
 import * as R from 'ramda';
 import { Gateway } from 'react-gateway';
-import Loading from "../../../components/Loading";
+import Loading from "components/Loading";
 import styled from 'styled-components';
 import Filter from "./Filter";
 

@@ -11,7 +11,10 @@ module.exports = {
     publicPath: 'build'
   },
   resolve: {
-    extensions: ['', '.scss', '.js', '.ts', '.tsx']
+    extensions: ['', '.scss', '.js', '.ts', '.tsx'],
+    root: [
+      path.resolve('./src'),
+    ]
   },
   module: {
     loaders: [
